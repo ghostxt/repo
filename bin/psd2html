@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+require_relative '../lib/psd2html.rb'
+psdPath = ARGV[0]
+dstHtmlPath = ARGV[1]
+
+if psdPath && dstHtmlPath
+  psd = Psd2Html.new(psdPath,dstHtmlPath)
+  fh = File.new(dstHtmlPath, "w")  #创建一个可写文件流
+  fh.puts psd.render()
+  fh.close
+else
+  puts <<-EOF
+  Please provide psdpath and htmlpath
+
+  Usage:
+    psd2html psdpath htmlpath
+  EOF
+end
+
+
+
+#puts blockRoot.children[0].children[1].save_as_png('../output.png')
