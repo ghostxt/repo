@@ -100,7 +100,42 @@ module Psd2html
       @@css_dictory = {}
       cssStr = sync_css(cssStr)
     end
-	    
+    def html_wrap(html)
+      html
+    end
+    def inline_style(type = "string", customStyle = {})
+      #默认为定位布局
+      visibility = @psNode['visible'] == true ? 'initial' : 'none'
+      if @parentConvertor.children_layout == 'fluid'
+        style = {
+          "position" => "relative",
+          "width" => "#{@psNode.width+2}px",
+          "height" => "#{@psNode.height+2}px",
+          "left" => 0,
+          "top" => 0
+        }
+      else
+        style = {
+          "position" => "absolute",
+          "display" => "inline-block",
+          "width" => "#{@psNode.width+2}px",
+          "height" => "#{@psNode.height+2}px",
+          "left" => curleft,
+          "top" => curtop,
+          "z-index" => "#{@psNode.depth}#{@parentConvertor.childrenConvertors.length - @index.to_i}"
+        }        
+      end
+      style = style.merge(customStyle);
+      if type == "string"
+        cssStr = ""
+        hash_to_array(style).each do |cssData|
+          cssStr += Mustache.render("{{key}}:{{value}};",cssData)
+        end
+        cssStr
+      else
+        style
+      end
+    end
     def render_html
       Util.log("start generate html of #{@psNode.name}...")
       return "" unless html_skeleton
@@ -108,9 +143,8 @@ module Psd2html
       data["attributes"] = hash_to_array(data["attributes"])
 				
       @childrenConvertors.each do |node|
-        data["content"] += node.render_html
+        data["content"] += html_wrap(node.render_html)
       end
-	    		    	
       htmlStr = Mustache.render(get_html_tpl,data)
       htmlStr = sync_html(htmlStr)
     end

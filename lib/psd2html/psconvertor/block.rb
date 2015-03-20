@@ -8,23 +8,8 @@ module Psd2html
       def get_html_tpl
         "<{{tag}} {{#attributes}} {{key}}=\"{{value}}\" {{/attributes}}><div style=\"position:relative;\">{{{content}}}</div></{{tag}}>"
       end
-      def inline_style
-        #默认为定位布局
-        visibility = @psNode['visible'] == true ? 'initial' : 'none'
-        if @parentConvertor.children_layout == 'fluid'
-          
-        else
-          "position:absolute;"+
-          "width:#{@psNode.width}px;"+
-          "height:#{@psNode.height}px;"+
-          "display:#{visibility};"+
-          "left:"+curleft+';'+
-          "top:"+curtop+';'+
-          "z-index:#{@psNode.depth}#{@parentConvertor.childrenConvertors.length - @index.to_i}"
-        end
-      end
       def html_skeleton
-        tag = @parentConvertor.children_tag || 'div'
+        tag = 'div'
         htmlRenderData = {
           "attributes" => {
             "class" => get_classname,

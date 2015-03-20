@@ -1,6 +1,6 @@
 module Psd2html
   module PsConvertor
-    class Img < ::Psd2html::Convertor
+    class Anim < ::Psd2html::Convertor
       def after_init
         Util.connect_nodes(@convertor, self)
       end
@@ -20,7 +20,17 @@ module Psd2html
         end
         # handle_asynchronously :save_image
       end
+      def css_skeleton
+        
+      end
       def html_skeleton    
+        cssData = "position:absolute;"+
+          "width:#{@psNode.width}px;"+
+          "height:#{@psNode.height}px;"+
+          "left:"+curleft+';'+
+          "top:"+curtop+';'+
+          "z-index:#{@psNode.depth}#{@parentConvertor.childrenConvertors.length - @index.to_i}"
+
         imgUrl = "#{File.dirname(@dstPath)}/#{guid}.png"
         # imgUrl = "#{File.dirname(@dstPath)}/img-source-#{guid}-#{Time.now.to_i}.png"
         # save_image(@psNode, imgUrl)
@@ -32,7 +42,7 @@ module Psd2html
         htmlRenderData = {
           "attributes" => {
             "class" => "img-#{guid}",
-            "style" => inline_style,
+            "style" => cssData,
             "src" => "#{guid}.png"
           },
           "tag" => "img"

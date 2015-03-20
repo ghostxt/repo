@@ -46,6 +46,7 @@ class Psd2Html
     <meta charset="UTF-8" />
     <title>Document</title>
     <style type="text/css">
+    *{margin:0;padding:0;border:0;}
     #{@treeRoot.render_css}
     </style>
     </head>
