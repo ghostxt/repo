@@ -3,21 +3,21 @@ require 'json'
 require 'delayed_job'
 require 'delayed_job_active_record'
 require_relative './Util.rb'
-require_relative 'psd2html/convertor.rb'
-Dir.glob( File.expand_path( "psd2html/psconvertor/*.rb", File.dirname(__FILE__) ) ) do |convertor|
+require_relative 'psdparser/convertor.rb'
+Dir.glob( File.expand_path( "psdparser/psconvertor/*.rb", File.dirname(__FILE__) ) ) do |convertor|
   require convertor
 end
 
-class Psd2Html
+class PsdParser
   CONVERTING_MAP = {
-    "ignore" => ::Psd2html::PsConvertor::Ignore,
-    "text" => ::Psd2html::PsConvertor::Text,
-    "link" => ::Psd2html::PsConvertor::Link,
-    "list" => ::Psd2html::PsConvertor::List,
-    "block" => ::Psd2html::PsConvertor::Block,
-    "img" => ::Psd2html::PsConvertor::Img,
-    "bg" => ::Psd2html::PsConvertor::Background,
-    "root" => ::Psd2html::PsConvertor::Root
+    "ignore" => ::Psdparser::PsConvertor::Ignore,
+    "text" => ::Psdparser::PsConvertor::Text,
+    "link" => ::Psdparser::PsConvertor::Link,
+    "list" => ::Psdparser::PsConvertor::List,
+    "block" => ::Psdparser::PsConvertor::Block,
+    "img" => ::Psdparser::PsConvertor::Img,
+    "bg" => ::Psdparser::PsConvertor::Background,
+    "root" => ::Psdparser::PsConvertor::Root
   }
   def initialize(psdPath,dstHtmlPath)
     @dstHtmlPath = dstHtmlPath
@@ -65,9 +65,9 @@ class Psd2Html
       convertorName = name.split('|').last.to_s
     elsif type == :group 
       convertorName = "block"
-      # elsif type == :layer && !node.text.nil?
+    elsif type == :layer && !node.text.nil?
       #   node.image.save_as_png('../tmp.png');
-      #   convertorName = "text"
+      convertorName = "text"
     else
       convertorName = "img"
     end 

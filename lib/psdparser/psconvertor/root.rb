@@ -1,8 +1,8 @@
 require "mustache"
 
-module Psd2html
+module Psdparser
   	module PsConvertor
-  		class Wrap < ::Psd2html::Convertor
+  		class Root < ::Psdparser::Convertor
   		
   		end
   	end

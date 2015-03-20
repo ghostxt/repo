@@ -1,7 +1,7 @@
 #TODO 貌似应该在这里创建li标签
-module Psd2html
+module Psdparser
 	module PsConvertor
-  	class List < ::Psd2html::Convertor
+  	class List < ::Psdparser::Convertor
       def get_classname
         classname = "list-#{guid}"
         return classname

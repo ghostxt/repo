@@ -1,7 +1,7 @@
 require "mustache"
 require 'digest/md5'
 require_relative '../util.rb'
-module Psd2html
+module Psdparser
   class Convertor
     #children_layout: 子节点布局，绝对定位或流式布局
     #children_tag: 子节点标签

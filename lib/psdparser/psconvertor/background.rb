@@ -1,6 +1,6 @@
-module Psd2html
+module Psdparser
   module PsConvertor
-    class Background < ::Psd2html::Convertor
+    class Background < ::Psdparser::Convertor
       def css_map
         imgUrl = "#{File.dirname(@dstPath)}/#{guid}.png"
         @psNode.image.save_as_png(imgUrl)

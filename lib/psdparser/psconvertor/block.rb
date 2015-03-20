@@ -1,6 +1,6 @@
-module Psd2html
+module Psdparser
   module PsConvertor
-    class Block < ::Psd2html::Convertor
+    class Block < ::Psdparser::Convertor
       def get_classname
         classname = "block-#{guid}"
         return classname

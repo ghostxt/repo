@@ -1,6 +1,6 @@
-module Psd2html
+module Psdparser
   module PsConvertor
-    class Img < ::Psd2html::Convertor
+    class Img < ::Psdparser::Convertor
       def after_init
         Util.connect_nodes(@convertor, self)
       end

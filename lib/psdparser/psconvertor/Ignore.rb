@@ -1,6 +1,6 @@
-module Psd2html
+module Psdparser
 	module PsConvertor
-  	class Ignore < ::Psd2html::Convertor
+  	class Ignore < ::Psdparser::Convertor
       def skip
         true
       end

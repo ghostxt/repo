@@ -1,6 +1,6 @@
-module Psd2html
+module Psdparser
   module PsConvertor
-    class Text < ::Psd2html::Convertor
+    class Text < ::Psdparser::Convertor
       def css_skeleton
         customStyle = {}
         @psNode.text[:font][:css].split(";\n").each do |styleString|

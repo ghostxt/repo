@@ -1,3 +1,3 @@
-module Psd2html
+module Psdparser
   VERSION = "0.0.6"
 end

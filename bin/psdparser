@@ -1,10 +1,10 @@
 #!/usr/bin/env ruby
-require_relative '../lib/psd2html.rb'
+require_relative '../lib/psdparser.rb'
 psdPath = ARGV[0]
 dstHtmlPath = ARGV[1]
 
 if psdPath && dstHtmlPath
-  psd = Psd2Html.new(psdPath,dstHtmlPath)
+  psd = PsdParser.new(psdPath,dstHtmlPath)
   fh = File.new(dstHtmlPath, "w")  #创建一个可写文件流
   fh.puts psd.render()
   fh.close
@@ -13,7 +13,7 @@ else
   Please provide psdpath and htmlpath
 
   Usage:
-    psd2html psdpath htmlpath
+    psdparser psdpath htmlpath
   EOF
 end
 

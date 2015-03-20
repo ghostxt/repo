@@ -1,4 +1,4 @@
-module Psd2html
+module Psdparser
   module PsConvertor
     class NewName
       def initialize(name)
@@ -8,7 +8,7 @@ module Psd2html
         @name
       end
     end
-    class Link < ::Psd2html::Convertor
+    class Link < ::Psdparser::Convertor
       def after_init
         tmp_node = @psNode.clone
         name_str = Util.remove_last_modifier(psNode.name)
