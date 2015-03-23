@@ -2,10 +2,8 @@ module Psdparser
   module PsConvertor
     class Img < ::Psdparser::Convertor
       def after_init
-        Util.connect_nodes(@convertor, self)
-      end
-      def skip
-        true
+        @skip = true
+        Util.connect_nodes(@parentConvertor, self)
       end
       def get_html_tpl
         "<{{tag}} {{#attributes}} {{key}}=\"{{value}}\" {{/attributes}} />"

@@ -15,7 +15,7 @@ module Psdparser
         name = NewName.new(name_str)
         tmp_node.adjustments[:name] = name
         self.psNode.children = [tmp_node]
-        # Util.connect_nodes(@convertor, self)
+        # Util.connect_nodes(@parentConvertor, self)
       end
       def guid
         "link-" + super

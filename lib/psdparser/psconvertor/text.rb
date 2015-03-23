@@ -6,7 +6,7 @@ module Psdparser
         @psNode.text[:font][:css].split(";\n").each do |styleString|
           styleKey = styleString.split(":")[0]
           styleValue = styleString.split(":")[1]
-          customStyle[styleKey] = css_hook(styleValue)
+          customStyle[styleKey] = Util.css_hook(styleValue)
         end
         cssRenderData = {
           "classname" => "text-#{guid}",

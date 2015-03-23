@@ -39,7 +39,7 @@ module Psdparser
           @width = 100
         end        
       end
-      def html_wrap(html)
+      def html_wrap_child(html)
         "<li>#{html}</li>"
       end
       def after_init

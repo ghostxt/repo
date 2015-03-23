@@ -72,6 +72,7 @@ class PsdParser
       convertorName = "img"
     end 
   end
+  
   def get_convertor(node,index,nodeName = nil, convertor = nil)
     return CONVERTING_MAP["root"].new(node,index,@dstHtmlPath, convertor) if node.root? 
 
@@ -86,6 +87,7 @@ class PsdParser
     end
     result
   end
+  
   def format_tree(convertor)
     if convertor.psNode.has_children?
       convertor.psNode.children.each_with_index do |node,index|
