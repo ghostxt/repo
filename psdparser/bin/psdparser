@@ -2,9 +2,10 @@
 require_relative '../lib/psdparser.rb'
 psdPath = ARGV[0]
 dstHtmlPath = ARGV[1]
+outputType = ARGV[2] || 'legend'
 
 if psdPath && dstHtmlPath
-  psd = PsdParser.new(psdPath,dstHtmlPath)
+  psd = PsdParser.new(psdPath,dstHtmlPath, outputType)
   fh = File.new(dstHtmlPath, "w")  #创建一个可写文件流
   fh.puts psd.render()
   fh.close
@@ -16,7 +17,3 @@ else
     psdparser psdpath htmlpath
   EOF
 end
-
-
-
-#puts blockRoot.children[0].children[1].save_as_png('../output.png')

@@ -1,16 +1,12 @@
-#TODO 貌似应该在这里创建li标签
 module Psdparser
-	module PsConvertor
-  	class List < ::Psdparser::Convertor
-      def get_classname
-        classname = "list-#{guid}"
-        return classname
-      end
+  module PsConvertor
+    class List < ::Psdparser::Convertor
       def sort_list_item(list)
+        #从左向右，从上到下的优先级
         list.sort{|a, b| a.left+a.top*100 <=> b.left+b.top*100}
       end
       def get_list_info
-        # @children_tag = "li"
+        @attributes["class"] = "list-#{guid}"
         @children_layout = "fluid"
         @width = 0;
         @psNode.children = sort_list_item(@psNode.children)
@@ -45,31 +41,6 @@ module Psdparser
       def after_init
         get_list_info
       end
-      def css_skeleton
-        cssRenderData = {
-          "classname" => get_classname+' li',
-          "styles" => {
-            "position" => "relative",
-            "display" => "inline-block",
-            "width" => "#{@width}%",
-            "margin-bottom" => "#{@vertical_spacing}px",
-            "vertical-align" => 'top'
-          }
-        }
-        cssRenderData = CSS_HASH_BASE.merge(cssRenderData)
-      end
-      def html_skeleton
-        htmlRenderData = {
-          "attributes" => {
-            "class" => get_classname,
-            "style" => inline_style
-          },
-          "tag" => 'ul'
-        }
-        htmlRenderData = HTML_HASH_BASE.merge(htmlRenderData)
-      end
-	  		
-  	end
+    end
   end
-
 end

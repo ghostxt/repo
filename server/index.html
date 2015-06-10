@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+    <script src="/static/jquery-2.1.3.min.js"></script>
+</head>
+<body>
+    <form id="uploadForm"
+    enctype="multipart/form-data"
+    action="./upload"
+    target="iframe"
+    method="post">
+    <input type="file" id="psdfile" name="psdfile" />
+    <select name="type" id="type">
+        <option value="legend">legend</option>
+        <option value="html">html</option>
+    </select>
+    <input type="submit" value="Submit" id="submit">
+</form>
+<div id="time"></div>
+<iframe src="about:blank" frameborder="0" name="iframe" id="iframe"></iframe>
+<div id="container"></div>
+<script type="text/javascript" charset="utf-8">
+var start, end;
+var showResult = function(data){
+    $('#time').html(((new Date).getTime() - start)/1000)
+    var type = $('#type').val();
+    if(type == 'html'){
+        $('#iframe')[0].contentDocument.body.innerHTML = data
+    }
+    if(type == 'legend'){
+        $('#container').text(JSON.stringify(data));
+    }
+}
+$("#submit").on('click',function () {
+    start = (new Date).getTime()
+    var $this = $(this);
+    $this.attr('disabled', 'disabled');
+    var data = new FormData();
+    jQuery.each($('#psdfile')[0].files, function(i, file) {
+        data.append('psdfile', file);
+        data.append('type', $('#type').val());
+    });
+    setTimeout(function() {
+        $this.removeAttr('disabled')
+    }, 3000);
+    $.ajax({
+        url: './upload',
+        data: data,
+        cache: false,
+        contentType: false,
+        processData: false,
+        type: 'POST',
+        success: function(data){
+            showResult(data)
+        }
+    });
+    return false;
+})
+</script>
+</body>
+</html>

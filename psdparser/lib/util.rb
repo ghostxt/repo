@@ -1,8 +1,15 @@
 class Util
 
   
-  def self.log(info)
-    STDOUT.puts "log:" + green(info)
+  def self.log(info, logPath = nil)
+    if logPath
+      STDOUT.puts "log:" + green(info) + " , save to:" + logPath
+      File.open(logPath, "a")  do  |file| 
+        file.puts("#{Time.new} #{info}")
+      end
+    else
+      STDOUT.puts "log:" + green(info)
+    end
   end
 
   def self.error(info)
@@ -48,6 +55,39 @@ class Util
     end
     dstArray
   end 
+
+  def self.parseEffects(psNode)
+    effects = {}
+    if psNode[:adjustments][:object_effects]
+      objectEffects = psNode[:adjustments][:object_effects].data
+      if objectEffects["DrSh"]
+        shadow = objectEffects["DrSh"]
+        effects["shadow"] = {
+          "distance" => shadow["Dstn"][:value],
+          "angle" => shadow["lagl"][:value],
+          "blur" => shadow["blur"][:value],
+          "color" => [shadow["Clr "]["Rd  "], shadow["Clr "]["Grn "], shadow["Clr "]["Bl  "]],
+          "opacity" => shadow["Opct"][:value]
+        }
+      end
+    end
+    effects
+  end
+  
+  def self.getConvertorName(node,nodeName = nil)
+    type = node.to_hash[:type]
+    name = nodeName || node.name
+    if name.include?("|")
+      convertorName = name.split('|').last.to_s
+    elsif type == :group 
+      convertorName = "block"
+    elsif type == :layer && !node.text.nil?
+      convertorName = "text"
+    else
+      convertorName = "img"
+    end
+    return convertorName
+  end
   
   def self.css_hook(style)
     hookHash = {
